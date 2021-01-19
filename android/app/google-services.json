@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "766498653237",
+    "firebase_url": "https://mozambiqueapp-default-rtdb.firebaseio.com",
+    "project_id": "mozambiqueapp",
+    "storage_bucket": "mozambiqueapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766498653237:android:466906300fda2f4a701d7c",
+        "android_client_info": {
+          "package_name": "com.example.flutter_firebase_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766498653237-j7gfgllarias3vav0shnl22p7812psi0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuZzlIUD6oiZLPhZIMGcSrKMJuzARlOQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766498653237-j7gfgllarias3vav0shnl22p7812psi0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766498653237:android:e45ac7340ff2eaf5701d7c",
+        "android_client_info": {
+          "package_name": "com.example.testing_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766498653237-j7gfgllarias3vav0shnl22p7812psi0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuZzlIUD6oiZLPhZIMGcSrKMJuzARlOQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766498653237-j7gfgllarias3vav0shnl22p7812psi0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:766498653237:android:614e799218e2e4bd701d7c",
+        "android_client_info": {
+          "package_name": "com.vnext.agriuber"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "766498653237-t2qlh31mve8r7mjg4quqc9hf8raohgiu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vnext.agriuber",
+            "certificate_hash": "01dc38784396fd6ee7a6c54919988c0e1fe6e3c7"
+          }
+        },
+        {
+          "client_id": "766498653237-j7gfgllarias3vav0shnl22p7812psi0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuZzlIUD6oiZLPhZIMGcSrKMJuzARlOQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "766498653237-j7gfgllarias3vav0shnl22p7812psi0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
