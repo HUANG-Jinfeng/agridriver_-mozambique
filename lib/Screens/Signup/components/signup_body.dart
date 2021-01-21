@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:testing_app/Screens/Login/login_screen.dart';
-import 'package:testing_app/Screens/Signup/components/background.dart';
-import 'package:testing_app/Screens/Signup/components/or_divider.dart';
-import 'package:testing_app/Screens/Signup/components/social_icon.dart';
+import 'package:testing_app/Screens/Signup/components/signup_background.dart';
+import 'package:testing_app/Screens/Signup/components/signup_or_divider.dart';
+import 'package:testing_app/Screens/Signup/components/signup_social_icon.dart';
 import 'package:testing_app/Screens/Welcome/welcome_screen.dart';
 import 'package:testing_app/components/already_have_an_account_acheck.dart';
 import 'package:testing_app/components/rounded_button.dart';
@@ -17,7 +17,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../components/rounded_input_field.dart';
 import '../../../constants.dart';
 
-class Body extends StatelessWidget {
+// ignore: must_be_immutable
+class SignupBody extends StatelessWidget {
   final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
   final TextEditingController fname = TextEditingController();
   final TextEditingController email = TextEditingController();
@@ -29,7 +30,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     Size size = MediaQuery.of(context).size;
-    return Background(
+    return SignupBackground(
       child: SingleChildScrollView(
         child: Form(
           key: _registerFormKey,

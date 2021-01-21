@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:testing_app/Screens/Login/login_screen.dart';
 import 'package:testing_app/Screens/Signup/signup_screen.dart';
-import 'package:testing_app/Screens/Welcome/components/background.dart';
+import 'package:testing_app/Screens/Welcome/components/welcome_background.dart';
 import 'package:testing_app/components/rounded_button.dart';
 import 'package:testing_app/constants.dart';
 import 'package:flutter_svg/svg.dart';
 
-class Body extends StatelessWidget {
+class WelcomeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     // This size provide us total height and width of our screen
-    return Background(
+    return WelcomeBackground(
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

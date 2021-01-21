@@ -31,11 +31,12 @@ dependencies:
   flutter_svg: ^0.19.1
   font_awesome_flutter: ^8.10.0
   google_fonts: ^1.1.1
-  firebase_auth: ^0.20.0+1
-  firebase_core: ^0.7.0
-  cloud_firestore: ^0.16.0
+  firebase_auth: "^0.20.0+1"
+  firebase_core: "^0.7.0"
+  cloud_firestore: "^0.16.0"
   google_maps_flutter: ^1.1.1
-  geolocator: ^6.1.14
+  geolocator: ^5.3.1
+  line_icons:
 
 dev_dependencies:
   flutter_test:

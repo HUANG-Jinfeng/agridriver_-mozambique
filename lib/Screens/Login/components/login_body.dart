@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testing_app/Screens/Login/components/background.dart';
-import 'package:testing_app/Screens/Main/main_map_screen.dart';
+import 'package:testing_app/Screens/Login/components/login_background.dart';
+import 'package:testing_app/Screens/Map/map_screen.dart';
 import 'package:testing_app/Screens/Signup/signup_screen.dart';
 import 'package:testing_app/components/already_have_an_account_acheck.dart';
 import 'package:testing_app/components/rounded_button.dart';
@@ -10,8 +10,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Body extends StatelessWidget {
-  const Body({
+class LoginBody extends StatelessWidget {
+  const LoginBody({
     Key key,
   }) : super(key: key);
 
@@ -35,7 +35,7 @@ class Body extends StatelessWidget {
               child: Text('Approve'),
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return MainMapScreen();
+                  return MapScreen();
                 }));
               },
             ),
@@ -81,7 +81,7 @@ class Body extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-    return Background(
+    return LoginBackground(
       child: SingleChildScrollView(
         child: Form(
           key: _loginFormKey,
