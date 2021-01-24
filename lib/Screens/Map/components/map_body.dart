@@ -50,6 +50,7 @@ class MapBodyState extends State<MapBody> {
             top: topPosition,
             right: rightPosition,
             child: FloatingActionButton(
+              heroTag: "chatBtn",
               elevation: 5.0,
               foregroundColor: kPrimaryColor,
               backgroundColor: Colors.white,

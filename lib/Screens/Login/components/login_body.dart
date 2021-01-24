@@ -20,27 +20,28 @@ class LoginBody extends StatelessWidget {
       context: context,
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Login Successful'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('You have been logged'),
-                Text('This dialogue will be chaned to a redirect'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Approve'),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return MapScreen();
-                }));
-              },
-            ),
-          ],
-        );
+        return MapScreen();
+        //   AlertDialog(
+        //   title: Text('Login Successful'),
+        //   content: SingleChildScrollView(
+        //     child: ListBody(
+        //       children: <Widget>[
+        //         Text('You have been logged'),
+        //         Text('This dialogue will be chaned to a redirect'),
+        //       ],
+        //     ),
+        //   ),
+        //   actions: <Widget>[
+        //     TextButton(
+        //       child: Text('Enter'),
+        //       onPressed: () {
+        //         Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //           return MapScreen();
+        //         }));
+        //       },
+        //     ),
+        //   ],
+        // );
       },
     );
   }
