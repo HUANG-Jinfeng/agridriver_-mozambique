@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:testing_app/Screens/Login/login_screen.dart';
+import 'package:testing_app/Screens/Map/map_screen.dart';
 import 'package:testing_app/Screens/Signup/components/signup_background.dart';
 import 'package:testing_app/Screens/Signup/components/signup_or_divider.dart';
 import 'package:testing_app/Screens/Signup/components/signup_social_icon.dart';
@@ -92,6 +93,7 @@ class SignupBody extends StatelessWidget {
                                   email.clear(),
                                   phone.clear(),
                                   password.clear(),
+                                  _showRegSDialog(context),
                                 })
                             .catchError((err) => print(err)))
                         .catchError((err) => print(err));
@@ -136,4 +138,34 @@ class SignupBody extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> _showRegSDialog(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Registered Successfully'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text('Thank you for registering'),
+              Text('Click Start to use AgriDriver'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Start'),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return MapScreen();
+              }));
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
