@@ -35,32 +35,44 @@ class MapBodyState extends State<MapBody> {
           ),
           Positioned(
             top: topPosition,
-            left: leftPosition,
-            child: FloatingActionButton(
+            left: leftPosition * 0.5,
+            child: RaisedButton(
+              child: Icon(Icons.menu),
+              color: Colors.white,
+              textColor: kPrimaryColor,
+              splashColor: kPrimaryLightColor,
               elevation: 5.0,
-              foregroundColor: kPrimaryColor,
-              backgroundColor: Colors.white,
-              child: new Icon(Icons.menu),
+              padding: EdgeInsets.all(15),
+              shape: CircleBorder(
+                side: BorderSide(
+                  color: Colors.white,
+                ),
+              ),
               onPressed: () {
-                print('button click to menu');
+                print('button click to menu screen');
               },
             ),
           ),
           Positioned(
             top: topPosition,
-            right: rightPosition,
-            child: FloatingActionButton(
+            right: rightPosition * 0.5,
+            child: RaisedButton(
+              child: Icon(Icons.chat),
+              color: Colors.white,
+              textColor: kPrimaryColor,
+              splashColor: kPrimaryLightColor,
               elevation: 5.0,
-              foregroundColor: kPrimaryColor,
-              backgroundColor: Colors.white,
-              child: new Icon(Icons.chat_rounded),
+              padding: EdgeInsets.all(15),
+              shape: CircleBorder(
+                side: BorderSide(
+                  color: Colors.white,
+                ),
+              ),
               onPressed: () {
-                print('button click to chat');
+                print('button click to chat screen');
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => ChatMainPage(),
-                  ),
+                  MaterialPageRoute(builder: (context) => ChatMainPage()),
                 );
               },
             ),
@@ -118,9 +130,9 @@ class MapBodyState extends State<MapBody> {
             ),
           ),
           Positioned(
-            left: 25 * 0.5,
-            right: 50 * 0.5,
-            bottom: 50 * 1.5,
+            left: leftPosition * 0.5,
+            right: rightPosition * 0.5,
+            bottom: bottomPosition * 1.5,
             child: Column(
               children: [
                 Container(
@@ -139,32 +151,6 @@ class MapBodyState extends State<MapBody> {
                       ),
                     ],
                   ),
-                  // child: Padding(
-                  //   padding: EdgeInsets.symmetric(horizontal: 100.0),
-                  //   child: Material(
-                  //     elevation: 5.0,
-                  //     borderRadius: BorderRadius.all(Radius.circular(00.0)),
-                  //     child: TextField(
-                  //       controller: TextEditingController(text: "Where to?"),
-                  //       cursorColor: Colors.white,
-                  //       decoration: InputDecoration(
-                  //         contentPadding: EdgeInsets.symmetric(
-                  //             horizontal: 32.0, vertical: 14.0),
-                  //         suffixIcon: Material(
-                  //           elevation: 2.0,
-                  //           borderRadius: BorderRadius.all(
-                  //             Radius.circular(30.0),
-                  //           ),
-                  //           child: Icon(
-                  //             Icons.search,
-                  //             color: Colors.black,
-                  //           ),
-                  //         ),
-                  //         border: InputBorder.none,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                 ),
               ],
             ),
