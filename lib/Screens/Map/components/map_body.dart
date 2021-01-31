@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_webservice/places.dart';
 import 'package:testing_app/Screens/Chat/chat_screen.dart';
 import 'package:testing_app/constants.dart';
 
@@ -150,6 +152,15 @@ class MapBodyState extends State<MapBody> {
                         offset: Offset(0.9, 0.9),
                       ),
                     ],
+                  ),
+                  child: InkWell(
+                    onTap: () async {
+                      Prediction p = await PlacesAutocomplete.show(
+                          context: context,
+                          apiKey: "AIzaSyBHGYdFQR5ZSFVt6JrbwoiEASk6PmLRP7w",
+                          language: "en",
+                          components: [Component(Component.country, "my")]);
+                    },
                   ),
                 ),
               ],

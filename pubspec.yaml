@@ -31,12 +31,35 @@ dependencies:
   flutter_svg: ^0.19.1
   font_awesome_flutter: ^8.10.0
   google_fonts: ^1.1.1
-  firebase_auth: "^0.20.0+1"
-  firebase_core: "^0.7.0"
-  cloud_firestore: "^0.16.0"
-  google_maps_flutter: ^1.1.1
-  geolocator: ^5.3.1
+#  firebase_auth: "^0.20.0+1"
+#  firebase_core: "^0.7.0"
+#  cloud_firestore: "^0.16.0"
+#  google_maps_flutter: ^1.1.1
+#  geolocator: ^5.3.1
+#  google_maps_webservice: ^0.0.19
+#  flutter_google_places: ^0.2.6
   line_icons:
+  cloud_firestore: ^0.13.0+1
+  firebase_auth: null
+  firebase_core: ^0.4.4
+  firebase_messaging: ^5.0.2
+  flutter_google_places: null
+  flutter_spinkit: ^4.1.2
+  geocoder: null
+  geoflutterfire: ^2.0.3+6
+  geolocator: ^5.3.1
+  google_maps_flutter: ^1.1.1
+  google_maps_webservice: ^0.0.19
+  http: null
+  location: null
+  modal_bottom_sheet: ^0.2.2
+  percent_indicator: ^2.1.7+2
+  provider: null
+  rxdart: any
+  shared_preferences: ^0.5.12
+  uuid: null
+  url_launcher: ^5.0.3
+  get_it: ^1.0.3+2
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +80,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - images/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

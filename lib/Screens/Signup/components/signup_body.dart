@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:testing_app/Screens/Login/login_screen.dart';
 import 'package:testing_app/Screens/Map/map_screen.dart';
 import 'package:testing_app/Screens/Signup/components/signup_background.dart';
@@ -14,6 +15,10 @@ import 'package:testing_app/components/rounded_phone_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:testing_app/components/text_field_container.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:testing_app/helpers/screen_navigation.dart';
+import 'package:testing_app/providers/app_state.dart';
+import 'package:testing_app/providers/user.dart';
+import 'package:testing_app/Screens/home.dart';
 
 import '../../../components/rounded_input_field.dart';
 import '../../../constants.dart';
@@ -21,20 +26,23 @@ import '../../../constants.dart';
 // ignore: must_be_immutable
 class SignupBody extends StatelessWidget {
   final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
+  final _key = GlobalKey<ScaffoldState>();
   final TextEditingController fname = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController phone = TextEditingController();
   final TextEditingController password = TextEditingController();
-  User currentUser;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // User currentUser;
+  // FirebaseFirestore firestore = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    // CollectionReference users = FirebaseFirestore.instance.collection('users');
+    UserProvider authProvider = Provider.of<UserProvider>(context);
+    AppStateProvider app = Provider.of<AppStateProvider>(context);
     Size size = MediaQuery.of(context).size;
     return SignupBackground(
       child: SingleChildScrollView(
         child: Form(
-          key: _registerFormKey,
+          key: _key,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -49,21 +57,22 @@ class SignupBody extends StatelessWidget {
               RoundedInputField(
                 hintText: "Full name",
                 onChanged: (value) {},
-                cont: fname,
+                // cont: fname,
+                cont: authProvider.name,
               ),
               RoundedEmailField(
                 hintText: "Email",
                 onChanged: (value) {},
-                cont: email,
+                cont: authProvider.email,
               ),
               RoundedPhoneField(
                 hintText: "Phone number",
                 onChanged: (value) {},
-                cont: phone,
+                cont: authProvider.phone,
               ),
               RoundedPasswordField(
                 onChanged: (value) {},
-                cont: password,
+                cont: authProvider.password,
               ),
               Text(
                 "Minimum 8 characters, at least 1 alphabet.",
@@ -75,29 +84,36 @@ class SignupBody extends StatelessWidget {
               SizedBox(height: size.height * 0.04),
               RoundedButton(
                 text: "SIGN UP",
-                press: () {
-                  if (_registerFormKey.currentState.validate()) {
-                    FirebaseAuth.instance
-                        .createUserWithEmailAndPassword(
-                            email: email.text, password: password.text)
-                        .then((currentUser) => users
-                            .add({
-                              "uid": currentUser.user.uid,
-                              "fname": fname.text,
-                              "phone": phone.text,
-                              "email": email.text,
-                            })
-                            .then((result) => {
-                                  print("User Added"),
-                                  fname.clear(),
-                                  email.clear(),
-                                  phone.clear(),
-                                  password.clear(),
-                                  _showRegSDialog(context),
-                                })
-                            .catchError((err) => print(err)))
-                        .catchError((err) => print(err));
+                press: () async {
+                  if (!await authProvider.signUp()) {
+                    _key.currentState.showSnackBar(
+                        SnackBar(content: Text("Registration failed!")));
+                    return;
                   }
+                  authProvider.clearController();
+                  changeScreenReplacement(context, MyHomePage());
+                  //   if (_registerFormKey.currentState.validate()) {
+                  //     FirebaseAuth.instance
+                  //         .createUserWithEmailAndPassword(
+                  //             email: email.text, password: password.text)
+                  //         .then((currentUser) => users
+                  //             .add({
+                  //               "uid": currentUser.user.uid,
+                  //               "fname": fname.text,
+                  //               "phone": phone.text,
+                  //               "email": email.text,
+                  //             })
+                  //             .then((result) => {
+                  //                   print("User Added"),
+                  //                   fname.clear(),
+                  //                   email.clear(),
+                  //                   phone.clear(),
+                  //                   password.clear(),
+                  //                   _showRegSDialog(context),
+                  //                 })
+                  //             .catchError((err) => print(err)))
+                  //         .catchError((err) => print(err));
+                  //   }
                 },
               ),
               SizedBox(height: size.height * 0.02),
@@ -160,7 +176,7 @@ Future<void> _showRegSDialog(BuildContext context) async {
             child: Text('Start'),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return MapScreen();
+                return MyHomePage();
               }));
             },
           ),
