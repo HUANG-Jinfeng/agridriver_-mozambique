@@ -42,33 +42,33 @@ class PaymentMethodSelectionWidget extends StatelessWidget {
               controller: myscrollController,
               children: [
                 SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: CustomText(
-                    text: "How do you want to pay,\n\$${appState.ridePrice}",
-                    size: 24,
-                    weight: FontWeight.bold,
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 15),
+                //   child: CustomText(
+                //     text: "How do you want to pay,\n\$${appState.ridePrice}",
+                //     size: 24,
+                //     weight: FontWeight.bold,
+                //   ),
+                // ),
                 SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Colors.blue.withOpacity(0.3),
-                                width: 1.5)),
-                        child: FlatButton.icon(
-                            onPressed: () {
-                              scaffoldState.currentState.showSnackBar(SnackBar(
-                                  content: Text("Method not available!")));
-                            },
-                            icon: Icon(Icons.credit_card),
-                            label: CustomText(text: "With Card")),
-                      ),
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //       border: Border.all(
+                      //           color: Colors.blue.withOpacity(0.3),
+                      //           width: 1.5)),
+                      //   child: FlatButton.icon(
+                      //       onPressed: () {
+                      //         scaffoldState.currentState.showSnackBar(SnackBar(
+                      //             content: Text("Method not available!")));
+                      //       },
+                      //       icon: Icon(Icons.credit_card),
+                      //       label: CustomText(text: "With Card")),
+                      // ),
                       Container(
                         decoration: BoxDecoration(
                             color: Colors.blueAccent.withOpacity(0.1),

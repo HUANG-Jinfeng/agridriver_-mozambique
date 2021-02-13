@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
       case Status.Authenticated:
         return MyHomePage();
       default:
-        return LoginScreen();
+        return WelcomeScreen();
     }
   }
 }

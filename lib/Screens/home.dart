@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:testing_app/Screens/Chat/chat_screen.dart';
 import 'package:testing_app/helpers/constants.dart';
 import 'package:testing_app/helpers/screen_navigation.dart';
 import 'package:testing_app/helpers/style.dart';
@@ -24,7 +25,8 @@ import 'package:testing_app/widgets/trip_draggable.dart';
 import '../helpers/style.dart';
 import '../helpers/style.dart';
 import '../helpers/style.dart';
-import 'login.dart';
+import 'package:testing_app/Screens/Login/login_screen.dart';
+import 'package:testing_app/constants.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -236,7 +238,7 @@ class _MapScreenState extends State<MapScreen> {
                 onCameraMove: appState.onCameraMove,
                 polylines: appState.poly,
               ),
-              Positioned(
+             Positioned(
                 top: 10,
                 left: 15,
                 child: IconButton(

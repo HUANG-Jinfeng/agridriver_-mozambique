@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
+import 'package:testing_app/Screens/Chat/chat_screen.dart';
 import 'package:testing_app/helpers/constants.dart';
 import 'package:testing_app/helpers/style.dart';
 import 'package:testing_app/locators/service_locator.dart';
@@ -12,6 +13,7 @@ import 'package:testing_app/providers/app_state.dart';
 import 'package:testing_app/providers/user.dart';
 import 'package:testing_app/services/call_sms.dart';
 
+import '../constants.dart';
 import '../helpers/style.dart';
 import 'custom_text.dart';
 
@@ -47,32 +49,63 @@ class DriverFoundWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      child: appState.driverArrived == false ? CustomText(
-                        text:
-                            'Your ride arrives in ${appState.routeModel.timeNeeded.text}',
-                        size: 12,
-                        weight: FontWeight.w300,
-                      ) : CustomText(
-                        text:
-                        'Your ride has arrived',
-                        size: 12,
-                        color: green,
-                        weight: FontWeight.w500,
-                      )
+                    Positioned(
+                      top: topPosition,
+                      right: rightPosition * 0,
+                      child: RaisedButton(
+                        child: Icon(Icons.chat),
+                        color: Colors.white,
+                        textColor: kPrimaryColor,
+                        splashColor: kPrimaryLightColor,
+                        elevation: 5.0,
+                        padding: EdgeInsets.all(15),
+                        shape: CircleBorder(
+                          side: BorderSide(
+                            color: Colors.white,
+                          ),
+                        ),
+                        onPressed: () {
+                          print('button click to chat screen');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ChatMainPage()),
+                          );
+                        },
+                      ),
                     ),
+                    Container(
+                        child: appState.driverArrived == false
+                            ? CustomText(
+                                text:
+                                    'Your ride arrives in ${appState.routeModel.timeNeeded.text}',
+                                size: 12,
+                                weight: FontWeight.w300,
+                              )
+                            : CustomText(
+                                text: 'Your ride has arrived',
+                                size: 12,
+                                color: green,
+                                weight: FontWeight.w500,
+                              )),
                   ],
                 ),
                 Divider(),
                 ListTile(
                   leading: Container(
-                    child:appState.driverModel?.phone  == null ? CircleAvatar(
-                      radius: 30,
-                      child: Icon(Icons.person_outline, size: 25,),
-                    ) : CircleAvatar(
-                      radius: 30,
-                      backgroundImage: NetworkImage(appState.driverModel?.photo),
-                    ),
+                    child: appState.driverModel?.phone == null
+                        ? CircleAvatar(
+                            radius: 30,
+                            child: Icon(
+                              Icons.person_outline,
+                              size: 25,
+                            ),
+                          )
+                        : CircleAvatar(
+                            radius: 30,
+                            // backgroundImage:
+                            //     NetworkImage(appState.driverModel?.photo),
+                          ),
                   ),
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -147,6 +180,7 @@ class DriverFoundWidget extends StatelessWidget {
                       width: 30,
                     ),
                     RichText(
+                        //PICK UP AND DESTINATION
                         text: TextSpan(children: [
                       TextSpan(
                           text: "\nPick up location \n",
@@ -161,34 +195,34 @@ class DriverFoundWidget extends StatelessWidget {
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16)),
                       TextSpan(
-                          text: "25th avenue, flutter street \n",
+                          text: "${appState.rideRequestModel?.destination} \n",
                           style: TextStyle(
                               fontWeight: FontWeight.w300, fontSize: 16)),
                     ], style: TextStyle(color: black))),
                   ],
                 ),
                 Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: CustomText(
-                        text: "Ride price",
-                        size: 18,
-                        weight: FontWeight.bold,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: CustomText(
-                        text: "\$${appState.ridePrice}",
-                        size: 18,
-                        weight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
+                // Row( //RIDE PRICE
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Padding(
+                //       padding: const EdgeInsets.all(12),
+                //       child: CustomText(
+                //         text: "Ride price",
+                //         size: 18,
+                //         weight: FontWeight.bold,
+                //       ),
+                //     ),
+                //     Padding(
+                //       padding: const EdgeInsets.all(12),
+                //       child: CustomText(
+                //         text: "\$${appState.ridePrice}",
+                //         size: 18,
+                //         weight: FontWeight.bold,
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 Padding(
                   padding: const EdgeInsets.all(12),
                   child: RaisedButton(
