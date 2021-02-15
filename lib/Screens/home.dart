@@ -3,6 +3,7 @@ import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,8 +23,6 @@ import 'package:testing_app/widgets/payment_method_selection.dart';
 import 'package:testing_app/widgets/pickup_selection_widget.dart';
 import 'package:testing_app/widgets/trip_draggable.dart';
 
-import '../helpers/style.dart';
-import '../helpers/style.dart';
 import '../helpers/style.dart';
 import 'package:testing_app/Screens/Login/login_screen.dart';
 import 'package:testing_app/constants.dart';
@@ -62,106 +61,131 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Scaffold(
         key: scaffoldState,
         drawer: Drawer(
-            child: ListView(
-          children: [
-            UserAccountsDrawerHeader(
+          child: ListView(
+            children: [
+              UserAccountsDrawerHeader(
+                //margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF009996),
+                  color: kPrimaryColor,
+                  //borderRadius: BorderRadius.all(Radius.circular(30)),
+                ),
+                currentAccountPicture: CircleAvatar(
+                  backgroundImage: AssetImage("assets/images/user_images.jpg"),
                 ),
                 accountName: CustomText(
                   text: userProvider.userModel?.name ?? "This is null",
-                  size: 18,
+                  size: 25,
                   weight: FontWeight.bold,
+                  color: Colors.black87,
                 ),
                 accountEmail: CustomText(
                   text: userProvider.userModel?.email ?? "This is null",
-                )),
-            ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: CustomText(text: "Log out"),
-              onTap: () {
-                userProvider.signOut();
-                changeScreenReplacement(context, LoginScreen());
-              },
-            )
-          ],
-        )),
+                  color: Colors.black54,
+                ),
+                onDetailsPressed: () {
+                  print('onDetailsPressed');
+                },
+                arrowColor: Colors.white,
+              ),
+              ListTile(
+                leading: Icon(Icons.vpn_key_rounded),
+                title: CustomText(text: "Reset Password"),
+                onTap: () {},
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.settings_applications_rounded),
+                title: CustomText(text: "Setting"),
+                onTap: () {},
+              ),
+              Divider(),
+              ListTile(
+                leading: Icon(Icons.exit_to_app_rounded),
+                title: CustomText(text: "Log out"),
+                onTap: () {
+                  userProvider.signOut();
+                  changeScreenReplacement(context, LoginScreen());
+                },
+              ),
+              Divider(),
+            ],
+          ),
+        ),
         body: Stack(
           children: [
             MapScreen(scaffoldState),
             Visibility(
               visible: appState.show == Show.DRIVER_FOUND,
               child: Positioned(
-                  top: 60,
-                  left: 15,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: appState.driverArrived
-                              ? Container(
-                                  color: green,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16),
-                                    child: CustomText(
-                                      text:
-                                          "Meet driver at the pick up location",
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                )
-                              : Container(
-                                  color: primary,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16),
-                                    child: CustomText(
-                                      text:
-                                          "Meet driver at the pick up location",
-                                      weight: FontWeight.w300,
-                                      color: white,
-                                    ),
+                top: 60,
+                left: 15,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: appState.driverArrived
+                            ? Container(
+                                color: green,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: CustomText(
+                                    text: "Meet driver at the pick up location",
+                                    color: Colors.white,
                                   ),
                                 ),
-                        ),
-                      ],
-                    ),
-                  )),
+                              )
+                            : Container(
+                                color: primary,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: CustomText(
+                                    text: "Meet driver at the pick up location",
+                                    weight: FontWeight.w300,
+                                    color: white,
+                                  ),
+                                ),
+                              ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
             Visibility(
               visible: appState.show == Show.TRIP,
               child: Positioned(
-                  top: 60,
-                  left: MediaQuery.of(context).size.width / 7,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Container(
-                            color: primary,
-                            child: Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: RichText(
-                                    text: TextSpan(children: [
-                                  TextSpan(
-                                      text:
-                                          "You\'ll reach your desiation in \n",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w300)),
-                                  TextSpan(
-                                      text: appState
-                                              .routeModel?.timeNeeded?.text ??
-                                          "",
-                                      style: TextStyle(fontSize: 22)),
-                                ]))),
-                          ),
+                top: 60,
+                left: MediaQuery.of(context).size.width / 7,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: Container(
+                          color: primary,
+                          child: Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: RichText(
+                                  text: TextSpan(children: [
+                                TextSpan(
+                                    text: "You\'ll reach your desiation in \n",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w300)),
+                                TextSpan(
+                                    text:
+                                        appState.routeModel?.timeNeeded?.text ??
+                                            "",
+                                    style: TextStyle(fontSize: 22)),
+                              ]))),
                         ),
-                      ],
-                    ),
-                  )),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
             // ANCHOR Draggable
             Visibility(
@@ -238,18 +262,50 @@ class _MapScreenState extends State<MapScreen> {
                 onCameraMove: appState.onCameraMove,
                 polylines: appState.poly,
               ),
-             Positioned(
-                top: 10,
-                left: 15,
-                child: IconButton(
-                    icon: Icon(
-                      Icons.menu,
-                      color: primary,
-                      size: 30,
+              Positioned(
+                top: topPosition,
+                left: leftPosition * 0.5,
+                child: RaisedButton(
+                  child: Icon(Icons.menu),
+                  color: Colors.white,
+                  textColor: kPrimaryColor,
+                  splashColor: kPrimaryLightColor,
+                  elevation: 5.0,
+                  padding: EdgeInsets.all(15),
+                  shape: CircleBorder(
+                    side: BorderSide(
+                      color: Colors.white,
                     ),
-                    onPressed: () {
-                      scaffoldSate.currentState.openDrawer();
-                    }),
+                  ),
+                  onPressed: () {
+                    print('button click to menu screen');
+                    scaffoldSate.currentState.openDrawer();
+                  },
+                ),
+              ),
+              Positioned(
+                top: topPosition,
+                right: rightPosition * 0.5,
+                child: RaisedButton(
+                  child: Icon(Icons.chat),
+                  color: Colors.white,
+                  textColor: kPrimaryColor,
+                  splashColor: kPrimaryLightColor,
+                  elevation: 5.0,
+                  padding: EdgeInsets.all(15),
+                  shape: CircleBorder(
+                    side: BorderSide(
+                      color: Colors.white,
+                    ),
+                  ),
+                  onPressed: () {
+                    print('button click to chat screen');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ChatMainPage()),
+                    );
+                  },
+                ),
               ),
 //              Positioned(
 //                bottom: 60,

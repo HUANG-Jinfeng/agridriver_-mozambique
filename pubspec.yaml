@@ -51,7 +51,7 @@ dependencies:
   google_maps_flutter: ^1.1.1
   google_maps_webservice: ^0.0.19
   http: null
-  location: null
+  location: ^3.2.4
   modal_bottom_sheet: ^0.2.2
   percent_indicator: ^2.1.7+2
   provider: null
@@ -60,6 +60,7 @@ dependencies:
   uuid: null
   url_launcher: ^5.0.3
   get_it: ^1.0.3+2
+  permission_handler: ^5.0.0
 
 dev_dependencies:
   flutter_test:

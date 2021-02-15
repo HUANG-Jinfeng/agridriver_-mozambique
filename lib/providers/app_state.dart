@@ -355,7 +355,8 @@ class AppStateProvider with ChangeNotifier {
         ImageConfiguration(devicePixelRatio: 2.5), 'images/taxi.png');
 
     locationPin = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 2.5), 'images/pin.png');
+        ImageConfiguration(devicePixelRatio: 2.5),
+        'assets/images/markeruser.png');
   }
 
   clearMarkers() {
