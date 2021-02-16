@@ -1,8 +1,13 @@
-# Uncomment this line to define a global platform for your project
-platform :ios, '9.0'
+# # Uncomment this line to define a global platform for your project
+# platform :ios, '9.0'
 
 # add the Firebase pod for Google Analytics
 pod 'Firebase/Analytics'
+# source 'https://github.com/CocoaPods/Specs.git'
+# target 'Runner' do
+#   pod 'GoogleMaps', '4.1.0'
+#   pod 'GooglePlaces', '4.1.0'
+# end
 # add pods for any other desired Firebase products
 # https://firebase.google.com/docs/ios/setup#available-pods
 

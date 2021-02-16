@@ -6,5 +6,5 @@ const kPrimaryNoteColor = Color(0xFF7A8B8B);
 
 const topPosition = 40.0;
 const bottomPosition = 25.0;
-const leftPosition = 25.0;
-const rightPosition = 25.0;
+const leftPosition = 10.0;
+const rightPosition = 10.0;

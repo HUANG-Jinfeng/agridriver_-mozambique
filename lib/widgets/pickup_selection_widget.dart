@@ -6,6 +6,7 @@ import 'package:google_maps_webservice/places.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:testing_app/constants.dart';
 import 'package:testing_app/helpers/constants.dart';
 import 'package:testing_app/helpers/style.dart';
 import 'package:testing_app/providers/app_state.dart';
@@ -27,10 +28,12 @@ class PickupSelectionWidget extends StatelessWidget {
       minChildSize: 0.28,
       builder: (BuildContext context, myscrollController) {
         return Container(
-          decoration: BoxDecoration(color: white,
-//                        borderRadius: BorderRadius.only(
-//                            topLeft: Radius.circular(20),
-//                            topRight: Radius.circular(20)),
+          decoration: BoxDecoration(
+              color: white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
               boxShadow: [
                 BoxShadow(
                     color: grey.withOpacity(.8),
@@ -49,7 +52,8 @@ class PickupSelectionWidget extends StatelessWidget {
                   CustomText(
                     text: "Move the pin to adjust pickup location",
                     size: 12,
-                    weight: FontWeight.w300,
+                    weight: FontWeight.normal,
+                    color: kPrimaryNoteColor,
                   ),
                 ],
               ),
@@ -59,8 +63,10 @@ class PickupSelectionWidget extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                child: Container(
-                  color: grey.withOpacity(.3),
+                child: Material(
+                  elevation: 0.0,
+                  color: kPrimaryLightColor,
+                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
                   child: TextField(
                     onTap: () async {
                       SharedPreferences preferences =
@@ -93,14 +99,14 @@ class PickupSelectionWidget extends StatelessWidget {
                         height: 10,
                         child: Icon(
                           Icons.location_on,
-                          color: primary,
+                          color: kPrimaryColor,
                         ),
                       ),
                       hintText: "Pick up location",
                       hintStyle: TextStyle(
-                          color: black,
+                          color: Colors.black54,
                           fontSize: 18,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.normal),
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.all(15),
                     ),
@@ -116,12 +122,15 @@ class PickupSelectionWidget extends StatelessWidget {
                     right: 15.0,
                   ),
                   child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                     onPressed: () async {
                       await appState.sendRequest();
                       appState.changeWidgetShowed(
                           showWidget: Show.PAYMENT_METHOD_SELECTION);
                     },
-                    color: black,
+                    color: kPrimaryColor,
                     child: Text(
                       "Comfirm Pickup",
                       style: TextStyle(color: white, fontSize: 16),

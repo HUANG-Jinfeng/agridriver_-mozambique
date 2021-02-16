@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -255,6 +256,11 @@ class _MapScreenState extends State<MapScreen> {
                     CameraPosition(target: appState.center, zoom: 15),
                 onMapCreated: appState.onCreate,
                 myLocationEnabled: true,
+                padding: EdgeInsets.only(
+                  top: topPosition * 8.7,
+                  bottom: bottomPosition * 8,
+                  right: rightPosition,
+                ),
                 mapType: MapType.normal,
                 compassEnabled: true,
                 rotateGesturesEnabled: true,
@@ -264,14 +270,14 @@ class _MapScreenState extends State<MapScreen> {
               ),
               Positioned(
                 top: topPosition,
-                left: leftPosition * 0.5,
+                left: leftPosition * 0.1,
                 child: RaisedButton(
                   child: Icon(Icons.menu),
                   color: Colors.white,
                   textColor: kPrimaryColor,
                   splashColor: kPrimaryLightColor,
-                  elevation: 5.0,
-                  padding: EdgeInsets.all(15),
+                  elevation: 15.0,
+                  padding: EdgeInsets.all(10),
                   shape: CircleBorder(
                     side: BorderSide(
                       color: Colors.white,
@@ -285,14 +291,14 @@ class _MapScreenState extends State<MapScreen> {
               ),
               Positioned(
                 top: topPosition,
-                right: rightPosition * 0.5,
+                right: rightPosition * 0.1,
                 child: RaisedButton(
                   child: Icon(Icons.chat),
                   color: Colors.white,
                   textColor: kPrimaryColor,
                   splashColor: kPrimaryLightColor,
-                  elevation: 5.0,
-                  padding: EdgeInsets.all(15),
+                  elevation: 15.0,
+                  padding: EdgeInsets.all(10),
                   shape: CircleBorder(
                     side: BorderSide(
                       color: Colors.white,
