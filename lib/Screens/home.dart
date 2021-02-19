@@ -115,104 +115,104 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Stack(
           children: [
             MapScreen(scaffoldState),
-            Visibility(
-              visible: appState.show == Show.DRIVER_FOUND,
-              child: Positioned(
-                top: 60,
-                left: 15,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: appState.driverArrived
-                            ? Container(
-                                color: green,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16),
-                                  child: CustomText(
-                                    text: "Meet driver at the pick up location",
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                color: primary,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16),
-                                  child: CustomText(
-                                    text: "Meet driver at the pick up location",
-                                    weight: FontWeight.w300,
-                                    color: white,
-                                  ),
-                                ),
-                              ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Visibility(
-              visible: appState.show == Show.TRIP,
-              child: Positioned(
-                top: 60,
-                left: MediaQuery.of(context).size.width / 7,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Container(
-                          color: primary,
-                          child: Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: RichText(
-                                  text: TextSpan(children: [
-                                TextSpan(
-                                    text: "You\'ll reach your desiation in \n",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w300)),
-                                TextSpan(
-                                    text:
-                                        appState.routeModel?.timeNeeded?.text ??
-                                            "",
-                                    style: TextStyle(fontSize: 22)),
-                              ]))),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+            // Visibility(
+            //   visible: appState.show == Show.DRIVER_FOUND,
+            //   child: Positioned(
+            //     top: 60,
+            //     left: 15,
+            //     child: Padding(
+            //       padding: const EdgeInsets.symmetric(horizontal: 30),
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           Container(
+            //             child: appState.driverArrived
+            //                 ? Container(
+            //                     color: green,
+            //                     child: Padding(
+            //                       padding: const EdgeInsets.all(16),
+            //                       child: CustomText(
+            //                         text: "Meet driver at the pick up location",
+            //                         color: Colors.white,
+            //                       ),
+            //                     ),
+            //                   )
+            //                 : Container(
+            //                     color: primary,
+            //                     child: Padding(
+            //                       padding: const EdgeInsets.all(16),
+            //                       child: CustomText(
+            //                         text: "Meet driver at the pick up location",
+            //                         weight: FontWeight.w300,
+            //                         color: white,
+            //                       ),
+            //                     ),
+            //                   ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            // Visibility(
+            //   visible: appState.show == Show.TRIP,
+            //   child: Positioned(
+            //     top: 60,
+            //     left: MediaQuery.of(context).size.width / 7,
+            //     child: Padding(
+            //       padding: const EdgeInsets.symmetric(horizontal: 30),
+            //       child: Row(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           Container(
+            //             child: Container(
+            //               color: primary,
+            //               child: Padding(
+            //                   padding: const EdgeInsets.all(16),
+            //                   child: RichText(
+            //                       text: TextSpan(children: [
+            //                     TextSpan(
+            //                         text: "You\'ll reach your desiation in \n",
+            //                         style:
+            //                             TextStyle(fontWeight: FontWeight.w300)),
+            //                     TextSpan(
+            //                         text:
+            //                             appState.routeModel?.timeNeeded?.text ??
+            //                                 "",
+            //                         style: TextStyle(fontSize: 22)),
+            //                   ]))),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ),
+            // ),
             // ANCHOR Draggable
-            Visibility(
-                visible: appState.show == Show.DESTINATION_SELECTION,
-                child: DestinationSelectionWidget()),
+            // Visibility(
+            //     visible: appState.show == Show.DESTINATION_SELECTION,
+            //     child: DestinationSelectionWidget()),
             // ANCHOR PICK UP WIDGET
-            Visibility(
-              visible: appState.show == Show.PICKUP_SELECTION,
-              child: PickupSelectionWidget(
-                scaffoldState: scaffoldState,
-              ),
-            ),
-            //  ANCHOR Draggable PAYMENT METHOD
-            Visibility(
-                visible: appState.show == Show.PAYMENT_METHOD_SELECTION,
-                child: PaymentMethodSelectionWidget(
-                  scaffoldState: scaffoldState,
-                )),
-            //  ANCHOR Draggable DRIVER
-            Visibility(
-                visible: appState.show == Show.DRIVER_FOUND,
-                child: DriverFoundWidget()),
-
-            //  ANCHOR Draggable DRIVER
-            Visibility(
-                visible: appState.show == Show.TRIP, child: TripWidget()),
+            // Visibility(
+            //   visible: appState.show == Show.PICKUP_SELECTION,
+            //   child: PickupSelectionWidget(
+            //     scaffoldState: scaffoldState,
+            //   ),
+            // ),
+            // //  ANCHOR Draggable PAYMENT METHOD
+            // Visibility(
+            //     visible: appState.show == Show.PAYMENT_METHOD_SELECTION,
+            //     child: PaymentMethodSelectionWidget(
+            //       scaffoldState: scaffoldState,
+            //     )),
+            // //  ANCHOR Draggable DRIVER
+            // Visibility(
+            //     visible: appState.show == Show.DRIVER_FOUND,
+            //     child: DriverFoundWidget()),
+            //
+            // //  ANCHOR Draggable DRIVER
+            // Visibility(
+            //     visible: appState.show == Show.TRIP, child: TripWidget()),
           ],
         ),
       ),
@@ -257,8 +257,8 @@ class _MapScreenState extends State<MapScreen> {
                 onMapCreated: appState.onCreate,
                 myLocationEnabled: true,
                 padding: EdgeInsets.only(
-                  top: topPosition * 8.7,
-                  bottom: bottomPosition * 8,
+                  top: topPosition * 12.7,
+                  // bottom: bottomPosition * 8,
                   right: rightPosition,
                 ),
                 mapType: MapType.normal,
