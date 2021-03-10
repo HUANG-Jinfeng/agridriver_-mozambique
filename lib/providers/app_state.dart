@@ -4,8 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:testing_app/Screens/Chat/chat_screen.dart';
+import 'package:testing_app/Screens/Chat/components/chat_detail_page.dart';
 import 'package:testing_app/helpers/constants.dart';
 import 'package:testing_app/helpers/style.dart';
 import 'package:testing_app/models/driver.dart';
@@ -19,6 +22,9 @@ import 'package:testing_app/widgets/custom_btn.dart';
 import 'package:testing_app/widgets/custom_text.dart';
 import 'package:testing_app/widgets/stars.dart';
 import 'package:uuid/uuid.dart';
+import 'package:testing_app/services/call_sms.dart';
+import 'package:testing_app/locators/service_locator.dart';
+import '../constants.dart';
 
 // * THIS ENUM WILL CONTAIN THE DRAGGABLE WIDGET TO BE DISPLAYED ON THE MAIN SCREEN
 enum Show {
@@ -39,6 +45,8 @@ class AppStateProvider with ChangeNotifier {
   static const DRIVER_AT_LOCATION_NOTIFICATION = 'DRIVER_AT_LOCATION';
   static const REQUEST_ACCEPTED_NOTIFICATION = 'REQUEST_ACCEPTED';
   static const TRIP_STARTED_NOTIFICATION = 'TRIP_STARTED';
+
+  final CallsAndMessagesService _service = locator<CallsAndMessagesService>();
 
   Set<Marker> _markers = {};
   //  this polys will be displayed on the map
@@ -306,18 +314,117 @@ class AppStateProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void _addDriverMarker({LatLng position, double rotation, String driverId}) {
+  void _addDriverMarker(
+      {LatLng position,
+      double rotation,
+      String driverId,
+      BuildContext context}) {
     var uuid = new Uuid();
     String markerId = uuid.v1();
     _markers.add(Marker(
-        markerId: MarkerId(markerId),
-        position: position,
-        rotation: rotation,
-        draggable: false,
-        zIndex: 2,
-        flat: true,
-        anchor: Offset(1, 1),
-        icon: carPin));
+      markerId: MarkerId(markerId),
+      position: position,
+      rotation: rotation,
+      draggable: false,
+      zIndex: 2,
+      flat: true,
+      anchor: Offset(1, 1),
+      icon: carPin,
+      onTap: () async {
+        driverModel = await _driverService.getDriverById(driverId);
+        print('Driver ID is ' +
+                driverId +
+                " and position is " +
+                position.toString() +
+                " Testing name: " +
+                driverModel?.name ??
+            "Nada");
+        return Get.dialog(
+          AlertDialog(
+              title: Text('Driver Info'),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)), //this right here
+              content: SingleChildScrollView(
+                  child: ListBody(
+                children: <Widget>[
+                  Container(
+                    height: 250,
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: CircleAvatar(
+                                backgroundImage: AssetImage(
+                                    "assets/images/user_driver1.jpg"),
+                                maxRadius: 30,
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: CustomText(
+                                  text: driverModel?.name ?? "Nada",
+                                  size: 30,
+                                  color: green,
+                                  weight: FontWeight.w500),
+                            ),
+                            Divider(),
+                            CustomText(text: driverModel?.car ?? "Unknown"),
+                            CustomText(text: driverModel?.plate ?? "Nada"),
+                            Divider(),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Row(children: <Widget>[
+                                RaisedButton(
+                                  child: Icon(Icons.call),
+                                  color: Colors.white,
+                                  textColor: kPrimaryColor,
+                                  splashColor: kPrimaryLightColor,
+                                  //elevation: 15.0,
+                                  padding: EdgeInsets.all(10),
+                                  shape: CircleBorder(
+                                    side: BorderSide(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    _service.call(driverModel.phone);
+                                  },
+                                ),
+                                RaisedButton(
+                                  child: Icon(Icons.chat),
+                                  color: Colors.white,
+                                  textColor: kPrimaryColor,
+                                  splashColor: kPrimaryLightColor,
+                                  //elevation: 15.0,
+                                  padding: EdgeInsets.all(10),
+                                  shape: CircleBorder(
+                                    side: BorderSide(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    print('button click to chat screen');
+                                    Get.to(ChatDetailPage());
+                                  },
+                                )
+                              ]),
+                            ),
+                          ],
+                        )),
+                  ),
+                ],
+              ))),
+        );
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ChatMainPage()),
+        );
+      },
+    ));
   }
 
   _updateMarkers(List<DriverModel> drivers) {

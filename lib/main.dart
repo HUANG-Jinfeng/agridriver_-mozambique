@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_app/Screens/Map/map_screen.dart';
 import 'package:testing_app/Screens/Welcome/welcome_screen.dart';
@@ -23,7 +24,7 @@ void main() {
         value: UserProvider.initialize(),
       ),
     ],
-    child: MaterialApp(
+    child: GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'AgriDriver',
       theme: ThemeData(
