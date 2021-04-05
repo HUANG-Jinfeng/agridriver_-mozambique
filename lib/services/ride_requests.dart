@@ -12,7 +12,7 @@ class RideRequestServices {
     Map<String, dynamic> position,
     Map distance,
   }) {
-    firebaseFiretore.collection(collection).document(id).setData({
+    firebaseFiretore.collection(collection).doc(id).set({
       "username": username,
       "id": id,
       "userId": userId,
@@ -25,14 +25,12 @@ class RideRequestServices {
   }
 
   void updateRequest(Map<String, dynamic> values) {
-    firebaseFiretore
-        .collection(collection)
-        .document(values['id'])
-        .updateData(values);
+    firebaseFiretore.collection(collection).doc(values['id']).update(values);
   }
 
   Stream<QuerySnapshot> requestStream() {
-    CollectionReference reference = Firestore.instance.collection(collection);
+    CollectionReference reference =
+        FirebaseFirestore.instance.collection(collection);
     return reference.snapshots();
   }
 }

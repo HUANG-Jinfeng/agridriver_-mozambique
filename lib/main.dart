@@ -12,8 +12,9 @@ import 'Screens/Login/login_screen.dart';
 import 'package:testing_app/Screens/home.dart';
 import 'locators/service_locator.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   setupLocator();
   return runApp(MultiProvider(
     providers: [

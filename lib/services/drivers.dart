@@ -6,17 +6,18 @@ class DriverService {
   String collection = 'drivers';
 
   Stream<List<DriverModel>> getDrivers() {
-    return firebaseFiretore.collection(collection).snapshots().map((event) =>
-        event.documents.map((e) => DriverModel.fromSnapshot(e)).toList());
+    return firebaseFiretore.collection(collection).snapshots().map(
+        (event) => event.docs.map((e) => DriverModel.fromSnapshot(e)).toList());
   }
 
   Future<DriverModel> getDriverById(String id) =>
-      firebaseFiretore.collection(collection).document(id).get().then((doc) {
+      firebaseFiretore.collection(collection).doc(id).get().then((doc) {
         return DriverModel.fromSnapshot(doc);
       });
 
   Stream<QuerySnapshot> driverStream() {
-    CollectionReference reference = Firestore.instance.collection(collection);
+    CollectionReference reference =
+        FirebaseFirestore.instance.collection(collection);
     return reference.snapshots();
   }
 }

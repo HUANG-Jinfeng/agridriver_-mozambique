@@ -13,7 +13,7 @@ class UserServices {
       int trips = 0,
       double rating = 0,
       Map position}) {
-    firebaseFiretore.collection(collection).document(id).setData({
+    firebaseFiretore.collection(collection).doc(id).set({
       "name": name,
       "id": id,
       "phone": phone,
@@ -26,21 +26,18 @@ class UserServices {
   }
 
   void updateUserData(Map<String, dynamic> values) {
-    firebaseFiretore
-        .collection(collection)
-        .document(values['id'])
-        .updateData(values);
+    firebaseFiretore.collection(collection).doc(values['id']).update(values);
   }
 
   Future<UserModel> getUserById(String id) =>
-      firebaseFiretore.collection(collection).document(id).get().then((doc) {
+      firebaseFiretore.collection(collection).doc(id).get().then((doc) {
         return UserModel.fromSnapshot(doc);
       });
 
   void addDeviceToken({String token, String userId}) {
     firebaseFiretore
         .collection(collection)
-        .document(userId)
-        .updateData({"token": token});
+        .doc(userId)
+        .update({"token": token});
   }
 }

@@ -660,18 +660,18 @@ class AppStateProvider with ChangeNotifier {
 
   listenToRequest({String id, BuildContext context}) async {
     requestStream = _requestServices.requestStream().listen((querySnapshot) {
-      querySnapshot.documentChanges.forEach((doc) async {
-        if (doc.document.data['id'] == id) {
-          rideRequestModel = RideRequestModel.fromSnapshot(doc.document);
+      querySnapshot.docChanges.forEach((doc) async {
+        if (doc.doc.data()['id'] == id) {
+          rideRequestModel = RideRequestModel.fromSnapshot(doc.doc);
           notifyListeners();
-          switch (doc.document.data['status']) {
+          switch (doc.doc.data()['status']) {
             case CANCELLED:
               break;
             case ACCEPTED:
               if (lookingForDriver) Navigator.pop(context);
               lookingForDriver = false;
               driverModel = await _driverService
-                  .getDriverById(doc.document.data['driverId']);
+                  .getDriverById(doc.doc.data()['driverId']);
               periodicTimer.cancel();
               clearPoly();
               _stopListeningToDriversStream();
@@ -735,9 +735,9 @@ class AppStateProvider with ChangeNotifier {
 
   _listenToDriver() {
     driverStream = _driverService.driverStream().listen((event) {
-      event.documentChanges.forEach((change) async {
-        if (change.document.data['id'] == driverModel.id) {
-          driverModel = DriverModel.fromSnapshot(change.document);
+      event.docChanges.forEach((change) async {
+        if (change.doc.data()['id'] == driverModel.id) {
+          driverModel = DriverModel.fromSnapshot(change.doc);
           // code to update marker
 //          List<Marker> _m = _markers
 //              .where((element) => element.markerId.value == driverModel.id).toList();

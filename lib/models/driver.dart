@@ -46,19 +46,19 @@ class DriverModel {
   int get votes => _votes;
 
   DriverModel.fromSnapshot(DocumentSnapshot snapshot) {
-    _name = snapshot.data[NAME];
-    _id = snapshot.data[ID];
-    _car = snapshot.data[CAR];
-    _plate = snapshot.data[PLATE];
-    _photo = snapshot.data[PHOTO];
-    _phone = snapshot.data[PHONE];
+    _name = snapshot.data()[NAME];
+    _id = snapshot.data()[ID];
+    _car = snapshot.data()[CAR];
+    _plate = snapshot.data()[PLATE];
+    _photo = snapshot.data()[PHOTO];
+    _phone = snapshot.data()[PHONE];
 
-    _rating = snapshot.data[RATING];
-    _votes = snapshot.data[VOTES];
+    _rating = snapshot.data()[RATING];
+    _votes = snapshot.data()[VOTES];
     _position = DriverPosition(
-        lat: snapshot.data[POSITION][LATITUDE],
-        lng: snapshot.data[POSITION][LONGITUDE],
-        heading: snapshot.data[POSITION][HEADING]);
+        lat: snapshot.data()[POSITION][LATITUDE],
+        lng: snapshot.data()[POSITION][LONGITUDE],
+        heading: snapshot.data()[POSITION][HEADING]);
   }
 
   LatLng getPosition() {

@@ -32,14 +32,14 @@ class UserModel {
   double get rating => _rating;
 
   UserModel.fromSnapshot(DocumentSnapshot snapshot) {
-    _name = snapshot.data[NAME];
-    _email = snapshot.data[EMAIL];
-    _id = snapshot.data[ID];
-    _token = snapshot.data[TOKEN];
+    _name = snapshot.data()[NAME];
+    _email = snapshot.data()[EMAIL];
+    _id = snapshot.data()[ID];
+    _token = snapshot.data()[TOKEN];
 
-    _phone = snapshot.data[PHONE];
-    _votes = snapshot.data[VOTES];
-    _trips = snapshot.data[TRIPS];
-    _rating = snapshot.data[RATING];
+    _phone = snapshot.data()[PHONE];
+    _votes = snapshot.data()[VOTES];
+    _trips = snapshot.data()[TRIPS];
+    _rating = snapshot.data()[RATING];
   }
 }

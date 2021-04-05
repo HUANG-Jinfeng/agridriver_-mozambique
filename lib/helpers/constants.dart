@@ -4,8 +4,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_maps_webservice/places.dart';
 
 const GOOGLE_MAPS_API_KEY = "AIzaSyBHGYdFQR5ZSFVt6JrbwoiEASk6PmLRP7w";
-const COUNTRY = "malaysia";
-Firestore firebaseFiretore = Firestore.instance;
+const COUNTRY = "mozambique";
+FirebaseFirestore firebaseFiretore = FirebaseFirestore.instance;
 FirebaseAuth auth = FirebaseAuth.instance;
 FirebaseMessaging fcm = FirebaseMessaging();
 GoogleMapsPlaces places = GoogleMapsPlaces(apiKey: GOOGLE_MAPS_API_KEY);
