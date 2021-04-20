@@ -158,8 +158,8 @@ class MapBodyState extends State<MapBody> {
                       Prediction p = await PlacesAutocomplete.show(
                           context: context,
                           apiKey: "AIzaSyBHGYdFQR5ZSFVt6JrbwoiEASk6PmLRP7w",
-                          language: "en",
-                          components: [Component(Component.country, "my")]);
+                          language: "pt",
+                          components: [Component(Component.country, "mz")]);
                     },
                   ),
                 ),

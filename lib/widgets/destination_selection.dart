@@ -68,9 +68,9 @@ class DestinationSelectionWidget extends StatelessWidget {
                               context: context,
                               apiKey: GOOGLE_MAPS_API_KEY,
                               mode: Mode.overlay, // Mode.fullscreen
-                              language: "en",
+                              language: "pt",
                               components: [
-                                new Component(Component.country, "my")
+                                new Component(Component.country, "mz")
                               ]);
                           PlacesDetailsResponse detail =
                               await places.getDetailsByPlaceId(p.placeId);

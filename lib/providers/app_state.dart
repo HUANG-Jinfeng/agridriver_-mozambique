@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
@@ -85,6 +86,8 @@ class AppStateProvider with ChangeNotifier {
   GoogleMapController get mapController => _mapController;
   RouteModel routeModel;
 
+  User currentUser;
+
   //  Driver request related variables
   bool lookingForDriver = false;
   bool alertsOnUi = false;
@@ -133,8 +136,14 @@ class AppStateProvider with ChangeNotifier {
   }
 
 // ANCHOR: MAPS & LOCATION METHODS
-  _updatePosition(Position newPosition) {
+  _updatePosition(Position newPosition) async {
     position = newPosition;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> values = {
+      "id": prefs.getString("id"),
+      "fposition": newPosition.toJson()
+    };
+    firebaseFiretore.collection("users").doc(values['id']).update(values);
     notifyListeners();
   }
 

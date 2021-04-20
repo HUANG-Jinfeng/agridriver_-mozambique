@@ -76,7 +76,7 @@ class PickupSelectionWidget extends StatelessWidget {
                           apiKey: GOOGLE_MAPS_API_KEY,
                           mode: Mode.overlay, // Mode.fullscreen
                           // language: "pt",
-                          components: [new Component(Component.country, "my")]);
+                          components: [new Component(Component.country, "mz")]);
                       PlacesDetailsResponse detail =
                           await places.getDetailsByPlaceId(p.placeId);
                       double lat = detail.result.geometry.location.lat;
