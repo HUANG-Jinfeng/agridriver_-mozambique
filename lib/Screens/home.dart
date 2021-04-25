@@ -10,6 +10,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:testing_app/Screens/Chat/chat_screen.dart';
+import 'package:testing_app/Screens/reset_password.dart';
 import 'package:testing_app/helpers/constants.dart';
 import 'package:testing_app/helpers/screen_navigation.dart';
 import 'package:testing_app/helpers/style.dart';
@@ -112,7 +113,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ListTile(
                 leading: Icon(Icons.vpn_key_rounded),
                 title: CustomText(text: "Reset Password"),
-                onTap: () {},
+                onTap: () {
+                  changeScreenReplacement(context, ResetPassword());
+                },
               ),
               Divider(),
               // ListTile(

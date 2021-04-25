@@ -141,11 +141,24 @@ class _LoginBodyState extends State<LoginBody> {
                     login = "Loading...";
                   });
                   if (!await authProvider.signIn()) {
-                    _key.currentState
-                        .showSnackBar(SnackBar(content: Text("Login failed!")));
+                    // _key.currentState
+                    //     .showSnackBar(SnackBar(content: Text("Login failed!")));
+                    setState(() {
+                      login = "LOG IN";
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: const Text('Login failed!'),
+                      ),
+                    );
                     return;
                   }
                   authProvider.clearController();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text('Login successful!'),
+                    ),
+                  );
                   changeScreenReplacement(context, MyHomePage());
                   // if (_loginFormKey.currentState.validate()) {
                   //   FirebaseAuth.instance

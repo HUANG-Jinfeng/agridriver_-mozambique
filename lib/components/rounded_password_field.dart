@@ -18,6 +18,15 @@ class RoundedPasswordField extends StatelessWidget {
         obscureText: true,
         onChanged: onChanged,
         controller: cont,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            if (value.length < 6) {
+              return "Password must be 6 or more";
+            }
+            return "Field cannot be empty";
+          }
+          return null;
+        },
         cursorColor: kPrimaryColor,
         decoration: InputDecoration(
           hintText: "Password",

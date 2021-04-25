@@ -59,7 +59,7 @@ class _SignupBodyState extends State<SignupBody> {
     return SignupBackground(
       child: SingleChildScrollView(
         child: Form(
-          key: _key,
+          key: _registerFormKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -114,14 +114,17 @@ class _SignupBodyState extends State<SignupBody> {
               RoundedButton(
                 text: "SIGN UP",
                 press: () async {
-                  authProvider.imageID = "images/$fileID";
-                  if (!await authProvider.signUp()) {
-                    _key.currentState.showSnackBar(
-                        SnackBar(content: Text("Registration failed!")));
-                    return;
+                  if (_registerFormKey.currentState.validate()) {
+                    authProvider.imageID = "images/$fileID";
+                    if (!await authProvider.signUp()) {
+                      // _registerFormKey.currentState.showSnackBar(
+                      //     SnackBar(content: Text("Registration failed!")));
+                      print("Registered successfully");
+                      return;
+                    }
+                    authProvider.clearController();
+                    changeScreenReplacement(context, MyHomePage());
                   }
-                  authProvider.clearController();
-                  changeScreenReplacement(context, MyHomePage());
                   //   if (_registerFormKey.currentState.validate()) {
                   //     FirebaseAuth.instance
                   //         .createUserWithEmailAndPassword(

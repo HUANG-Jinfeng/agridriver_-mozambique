@@ -14,16 +14,18 @@ import 'package:testing_app/helpers/screen_navigation.dart';
 import 'package:testing_app/providers/user.dart';
 import 'package:testing_app/Screens/home.dart';
 
-class LoginBody extends StatefulWidget {
-  const LoginBody({
+import '../constants.dart';
+
+class ResetPassword extends StatefulWidget {
+  const ResetPassword({
     Key key,
   }) : super(key: key);
 
   @override
-  _LoginBodyState createState() => _LoginBodyState();
+  _ResetPasswordState createState() => _ResetPasswordState();
 }
 
-class _LoginBodyState extends State<LoginBody> {
+class _ResetPasswordState extends State<ResetPassword> {
   Future<void> _showMyDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -55,7 +57,9 @@ class _LoginBodyState extends State<LoginBody> {
     );
   }
 
-  String login = "UPDATE";
+  String login = "SEND LINK";
+  bool sent = false;
+  User user = FirebaseAuth.instance.currentUser;
   Future<void> _showMyLogFDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -91,105 +95,121 @@ class _LoginBodyState extends State<LoginBody> {
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
     final _key = GlobalKey<ScaffoldState>();
-    TextEditingController email = TextEditingController();
-    TextEditingController password = TextEditingController();
+    TextEditingController oldpassword = TextEditingController();
+    TextEditingController newpassword = TextEditingController();
+    TextEditingController confirmpassword = TextEditingController();
     Size size = MediaQuery.of(context).size;
     // FirebaseFirestore firestore = FirebaseFirestore.instance;
     final authProvider = Provider.of<UserProvider>(context);
 
-    return LoginBackground(
-      child: SingleChildScrollView(
-        child: Form(
-          key: _key,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                "RESET PASSWORD",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
+    return Scaffold(
+      body: LoginBackground(
+        child: SingleChildScrollView(
+          child: Form(
+            key: _key,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "RESET PASSWORD",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                  ),
                 ),
-              ),
-              SizedBox(height: size.height * 0.02),
-              SvgPicture.asset(
-                "assets/icons/signup.svg",
-                height: size.height * 0.25,
-              ),
-              SizedBox(height: size.height * 0.02),
-              RoundedInputField(
-                hintText: "Email",
-                onChanged: (value) {},
-                cont: authProvider.email,
-              ),
-              RoundedPasswordField(
-                onChanged: (value) {},
-                cont: authProvider.password,
-              ),
-              // Text(
-              //   "Remember me",
-              //   style: TextStyle(
-              //     color: kPrimaryNoteColor,
-              //     fontSize: 14,
-              //   ),
-              // ),
-              SizedBox(height: size.height * 0.04),
-              RoundedButton(
-                text: login,
-                press: () async {
-                  setState(() {
-                    login = "Loading...";
-                  });
-                  if (!await authProvider.signIn()) {
-                    _key.currentState
-                        .showSnackBar(SnackBar(content: Text("Login failed!")));
-                    return;
-                  }
-                  authProvider.clearController();
-                  changeScreenReplacement(context, MyHomePage());
-                  // if (_loginFormKey.currentState.validate()) {
-                  //   FirebaseAuth.instance
-                  //       .signInWithEmailAndPassword(
-                  //           email: email.text, password: password.text)
-                  //       .then((currentUser) => firestore
-                  //           .collection("users")
-                  //           .doc(currentUser.user.uid)
-                  //           .get()
-                  //           .then(
-                  //             (DocumentSnapshot result) =>
-                  //                 // print("User Logged in"),
-                  //                 _showMyDialog(context),
-                  //           )
-                  //           // Navigator.pushReplacement(
-                  //           //     context,
-                  //           //     MaterialPageRoute(
-                  //           //         builder: (context) => HomePage(
-                  //           //               title:
-                  //           //                   result["fname"] + "'s Tasks",
-                  //           //               uid: currentUser.uid,
-                  //           //             ))))
-                  //           .catchError((err) => print(err)))
-                  //       .catchError((err) => _showMyLogFDialog(context));
-                  // }
-                },
-              ),
-              SizedBox(height: size.height * 0.03),
-              AlreadyHaveAnAccountCheck(
-                press: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return SignUpScreen();
-                      },
-                    ),
-                  );
-                },
-              ),
-            ],
+                SizedBox(height: size.height * 0.02),
+                Text(
+                  "A password reset link will",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                Text(
+                  "be sent to your email",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                SizedBox(height: size.height * 0.02),
+                SvgPicture.asset(
+                  "assets/icons/signup.svg",
+                  height: size.height * 0.25,
+                ),
+                SizedBox(height: size.height * 0.02),
+                // TextFormField(
+                //   obscureText: true,
+                //   controller: oldpassword,
+                //   cursorColor: kPrimaryColor,
+                //   decoration: InputDecoration(
+                //     hintText: "Old Password",
+                //     errorText: checkCurrentPasswordValid
+                //         ? null
+                //         : "Please double check your current password",
+                //     icon: Icon(
+                //       Icons.lock_open,
+                //       color: kPrimaryColor,
+                //     ),
+                //     border: InputBorder.none,
+                //   ),
+                // ),
+                // TextFormField(
+                //   obscureText: true,
+                //   controller: newpassword,
+                //   cursorColor: kPrimaryColor,
+                //   decoration: InputDecoration(
+                //     hintText: "New Password",
+                //     icon: Icon(
+                //       Icons.lock,
+                //       color: kPrimaryColor,
+                //     ),
+                //     border: InputBorder.none,
+                //   ),
+                // ),
+                // TextFormField(
+                //   obscureText: true,
+                //   controller: oldpassword,
+                //   cursorColor: kPrimaryColor,
+                //   validator: (value) {
+                //     return newpassword.text == value
+                //         ? null
+                //         : "Password does not match";
+                //   },
+                //   decoration: InputDecoration(
+                //     hintText: "Confirm Password",
+                //     icon: Icon(
+                //       Icons.lock_rounded,
+                //       color: kPrimaryColor,
+                //     ),
+                //     border: InputBorder.none,
+                //   ),
+                // ),
+                // SizedBox(height: size.height * 0.04),
+                RoundedButton(
+                  text: login,
+                  press: sent ? null : () => sendEmail(),
+                ),
+                SizedBox(height: size.height * 0.03),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  sendEmail() async {
+    setState(() {
+      login = "EMAIL SENT";
+      sent = true;
+    });
+    // if (_loginFormKey.currentState.validate()) {
+    //   user.updatePassword(newpassword.text);
+    //   setState(() {
+    //     login = "SEND LINK";
+    //   });
+    //}
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: user.email);
   }
 }
