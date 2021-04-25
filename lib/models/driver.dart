@@ -14,6 +14,7 @@ class DriverModel {
   static const RATING = "rating";
   static const VOTES = "votes";
   static const PHONE = "phone";
+  static const IMAGEID = "imageID";
 
   String _id;
   String _name;
@@ -21,6 +22,7 @@ class DriverModel {
   String _plate;
   String _photo;
   String _phone;
+  String _imageID;
 
   double _rating;
   int _votes;
@@ -39,6 +41,8 @@ class DriverModel {
 
   String get phone => _phone;
 
+  String get imageID => _imageID;
+
   DriverPosition get position => _position;
 
   double get rating => _rating;
@@ -52,6 +56,7 @@ class DriverModel {
     _plate = snapshot.data()[PLATE];
     _photo = snapshot.data()[PHOTO];
     _phone = snapshot.data()[PHONE];
+    _imageID = snapshot.data()[IMAGEID];
 
     _rating = snapshot.data()[RATING];
     _votes = snapshot.data()[VOTES];

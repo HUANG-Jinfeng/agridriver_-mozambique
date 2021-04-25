@@ -9,12 +9,14 @@ class UserModel {
   static const TRIPS = "trips";
   static const RATING = "rating";
   static const TOKEN = "token";
+  static const IMAGE = "imageID";
 
   String _id;
   String _name;
   String _email;
   String _phone;
   String _token;
+  String _imageID;
 
   int _votes;
   int _trips;
@@ -25,6 +27,7 @@ class UserModel {
   String get email => _email;
   String get id => _id;
   String get token => _token;
+  String get imageID => _imageID;
 
   String get phone => _phone;
   int get votes => _votes;
@@ -36,6 +39,7 @@ class UserModel {
     _email = snapshot.data()[EMAIL];
     _id = snapshot.data()[ID];
     _token = snapshot.data()[TOKEN];
+    _imageID = snapshot.data()[IMAGE];
 
     _phone = snapshot.data()[PHONE];
     _votes = snapshot.data()[VOTES];

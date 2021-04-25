@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:geolocator/geolocator.dart';
@@ -348,6 +349,9 @@ class AppStateProvider with ChangeNotifier {
                 " Testing name: " +
                 driverModel?.name ??
             "Nada");
+        String img = driverModel?.imageID ?? 'images/imageName';
+        final ref = FirebaseStorage.instance.ref().child('$img');
+        var url = await ref.getDownloadURL();
         return Get.dialog(
           AlertDialog(
               title: Text('Driver Info'),
@@ -367,8 +371,10 @@ class AppStateProvider with ChangeNotifier {
                             Align(
                               alignment: Alignment.topCenter,
                               child: CircleAvatar(
-                                backgroundImage: AssetImage(
-                                    "assets/images/user_driver1.jpg"),
+                                backgroundImage: (url != null)
+                                    ? NetworkImage(url)
+                                    : AssetImage(
+                                        "assets/images/user_driver1.jpg"),
                                 maxRadius: 30,
                               ),
                             ),

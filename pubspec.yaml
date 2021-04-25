@@ -43,6 +43,7 @@ dependencies:
   firebase_auth: null
   firebase_core: ^0.7.0
   firebase_messaging: ^5.0.2
+  firebase_storage: ^7.0.0
   flutter_google_places: 0.2.8
   flutter_spinkit: ^4.1.2
   geocoder: null
@@ -62,6 +63,7 @@ dependencies:
   get_it: ^1.0.3+2
   permission_handler: ^5.0.0
   get: ^3.26.0
+  image_picker: ^0.6.7+14
 
 dev_dependencies:
   flutter_test:

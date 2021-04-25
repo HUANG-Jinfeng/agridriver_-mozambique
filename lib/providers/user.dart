@@ -33,6 +33,8 @@ class UserProvider with ChangeNotifier {
   TextEditingController name = TextEditingController();
   TextEditingController phone = TextEditingController();
 
+  String imageID;
+
   UserProvider.initialize() {
     _initialize();
   }
@@ -77,6 +79,7 @@ class UserProvider with ChangeNotifier {
         name: name.text.trim(),
         email: email.text.trim(),
         phone: phone.text.trim(),
+        imageID: imageID,
       );
       await prefs.setString(ID, result.user.uid);
       await prefs.setBool(LOGGED_IN, true);

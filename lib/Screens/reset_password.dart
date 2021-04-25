@@ -55,7 +55,7 @@ class _LoginBodyState extends State<LoginBody> {
     );
   }
 
-  String login = "LOG IN";
+  String login = "UPDATE";
   Future<void> _showMyLogFDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
@@ -105,7 +105,7 @@ class _LoginBodyState extends State<LoginBody> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                "LOG IN",
+                "RESET PASSWORD",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30,

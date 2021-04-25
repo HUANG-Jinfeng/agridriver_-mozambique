@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -58,6 +59,15 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
     AppStateProvider appState = Provider.of<AppStateProvider>(context);
+    String img = userProvider.userModel?.imageID ?? 'images/imageName';
+    Future<String> getImage() async {
+      final ref = FirebaseStorage.instance.ref().child('$img');
+// no need of the file extension, the name will do fine.
+      var url = await ref.getDownloadURL();
+      //print(url);
+      return url;
+    }
+
     return SafeArea(
       child: Scaffold(
         key: scaffoldState,
@@ -70,9 +80,20 @@ class _MyHomePageState extends State<MyHomePage> {
                   color: kPrimaryColor,
                   //borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
-                currentAccountPicture: CircleAvatar(
-                  backgroundImage: AssetImage("assets/images/user_images.jpg"),
-                ),
+                currentAccountPicture: FutureBuilder(
+                    future: getImage(),
+                    builder: (context, snapshot) {
+                      return CircleAvatar(
+                        backgroundImage: snapshot.hasData
+                            ? NetworkImage(snapshot.data)
+                            : AssetImage("assets/images/user_images.jpg"),
+                      );
+                    }),
+                // CircleAvatar(
+                //   backgroundImage: (userProvider.userModel.imageID != null)
+                //       ? NetworkImage(imageUrl)
+                //       : AssetImage("assets/images/user_images.jpg"),
+                // ),
                 accountName: CustomText(
                   text: userProvider.userModel?.name ?? "This is null",
                   size: 25,
@@ -94,12 +115,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 onTap: () {},
               ),
               Divider(),
-              ListTile(
-                leading: Icon(Icons.settings_applications_rounded),
-                title: CustomText(text: "Setting"),
-                onTap: () {},
-              ),
-              Divider(),
+              // ListTile(
+              //   leading: Icon(Icons.settings_applications_rounded),
+              //   title: CustomText(text: "Setting"),
+              //   onTap: () {},
+              // ),
+              // Divider(),
               ListTile(
                 leading: Icon(Icons.exit_to_app_rounded),
                 title: CustomText(text: "Log out"),

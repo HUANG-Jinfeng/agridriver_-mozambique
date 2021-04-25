@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:testing_app/Screens/Login/login_screen.dart';
 import 'package:testing_app/Screens/Map/map_screen.dart';
@@ -19,20 +24,32 @@ import 'package:testing_app/helpers/screen_navigation.dart';
 import 'package:testing_app/providers/app_state.dart';
 import 'package:testing_app/providers/user.dart';
 import 'package:testing_app/Screens/home.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../components/rounded_input_field.dart';
 import '../../../constants.dart';
 
 // ignore: must_be_immutable
-class SignupBody extends StatelessWidget {
+class SignupBody extends StatefulWidget {
+  @override
+  _SignupBodyState createState() => _SignupBodyState();
+}
+
+class _SignupBodyState extends State<SignupBody> {
   final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
+
   final _key = GlobalKey<ScaffoldState>();
+
   final TextEditingController fname = TextEditingController();
+
   final TextEditingController email = TextEditingController();
+
   final TextEditingController phone = TextEditingController();
+
   final TextEditingController password = TextEditingController();
-  // User currentUser;
-  // FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  String imageUrl;
+
   @override
   Widget build(BuildContext context) {
     // CollectionReference users = FirebaseFirestore.instance.collection('users');
@@ -52,6 +69,18 @@ class SignupBody extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
                 ),
+              ),
+              InkWell(
+                child: CircleAvatar(
+                  radius: 50.0,
+                  backgroundImage: (imageUrl != null)
+                      ? NetworkImage(imageUrl)
+                      : AssetImage("assets/images/user_images.jpg"),
+                ),
+                onTap: () {
+                  uploadImage();
+                  print("Button pressed");
+                },
               ),
               SizedBox(height: size.height * 0.02),
               RoundedInputField(
@@ -85,6 +114,7 @@ class SignupBody extends StatelessWidget {
               RoundedButton(
                 text: "SIGN UP",
                 press: () async {
+                  authProvider.imageID = "images/$fileID";
                   if (!await authProvider.signUp()) {
                     _key.currentState.showSnackBar(
                         SnackBar(content: Text("Registration failed!")));
@@ -130,29 +160,61 @@ class SignupBody extends StatelessWidget {
                   );
                 },
               ),
-              OrDivider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SocalIcon(
-                    iconSrc: "assets/icons/facebook.svg",
-                    press: () {},
-                  ),
-                  SocalIcon(
-                    iconSrc: "assets/icons/twitter.svg",
-                    press: () {},
-                  ),
-                  SocalIcon(
-                    iconSrc: "assets/icons/google-plus.svg",
-                    press: () {},
-                  ),
-                ],
-              )
+              // OrDivider(),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: <Widget>[
+              //     SocalIcon(
+              //       iconSrc: "assets/icons/facebook.svg",
+              //       press: () {},
+              //     ),
+              //     SocalIcon(
+              //       iconSrc: "assets/icons/twitter.svg",
+              //       press: () {},
+              //     ),
+              //     SocalIcon(
+              //       iconSrc: "assets/icons/google-plus.svg",
+              //       press: () {},
+              //     ),
+              //   ],
+              // )
             ],
           ),
         ),
       ),
     );
+  }
+
+  String fileID = Uuid().v4();
+  uploadImage() async {
+    final _firebaseStorage = FirebaseStorage.instance;
+    final _imagePicker = ImagePicker();
+    PickedFile image;
+    //Check Permissions
+    await Permission.photos.request();
+
+    var permissionStatus = await Permission.photos.status;
+
+    if (permissionStatus.isGranted) {
+      //Select Image
+      image = await _imagePicker.getImage(source: ImageSource.gallery);
+      var file = File(image.path);
+
+      if (image != null) {
+        //Upload to Firebase
+        var snapshot =
+            await _firebaseStorage.ref().child("images/$fileID").putFile(file);
+        //.onComplete;
+        var downloadUrl = await snapshot.ref.getDownloadURL();
+        setState(() {
+          imageUrl = downloadUrl;
+        });
+      } else {
+        print('No Image Path Received');
+      }
+    } else {
+      print('Permission not granted. Try Again with permission access');
+    }
   }
 }
 
