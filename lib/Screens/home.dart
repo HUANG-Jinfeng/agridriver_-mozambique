@@ -61,6 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
     UserProvider userProvider = Provider.of<UserProvider>(context);
     AppStateProvider appState = Provider.of<AppStateProvider>(context);
     String img = userProvider.userModel?.imageID ?? 'images/imageName';
+    final ref = FirebaseStorage.instance.ref().child('$img');
     Future<String> getImage() async {
       final ref = FirebaseStorage.instance.ref().child('$img');
 // no need of the file extension, the name will do fine.
@@ -82,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   //borderRadius: BorderRadius.all(Radius.circular(30)),
                 ),
                 currentAccountPicture: FutureBuilder(
-                    future: getImage(),
+                    future: ref.getDownloadURL(),
                     builder: (context, snapshot) {
                       return CircleAvatar(
                         backgroundImage: snapshot.hasData
@@ -313,30 +314,30 @@ class _MapScreenState extends State<MapScreen> {
                   },
                 ),
               ),
-              Positioned(
-                top: topPosition,
-                right: rightPosition * 0.1,
-                child: RaisedButton(
-                  child: Icon(Icons.chat),
-                  color: Colors.white,
-                  textColor: kPrimaryColor,
-                  splashColor: kPrimaryLightColor,
-                  elevation: 15.0,
-                  padding: EdgeInsets.all(10),
-                  shape: CircleBorder(
-                    side: BorderSide(
-                      color: Colors.white,
-                    ),
-                  ),
-                  onPressed: () {
-                    print('button click to chat screen');
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ChatMainPage()),
-                    );
-                  },
-                ),
-              ),
+              // Positioned(
+              //   top: topPosition,
+              //   right: rightPosition * 0.1,
+              //   child: RaisedButton(
+              //     child: Icon(Icons.chat),
+              //     color: Colors.white,
+              //     textColor: kPrimaryColor,
+              //     splashColor: kPrimaryLightColor,
+              //     elevation: 15.0,
+              //     padding: EdgeInsets.all(10),
+              //     shape: CircleBorder(
+              //       side: BorderSide(
+              //         color: Colors.white,
+              //       ),
+              //     ),
+              //     onPressed: () {
+              //       print('button click to chat screen');
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(builder: (context) => ChatMainPage()),
+              //       );
+              //     },
+              //   ),
+              // ),
 //              Positioned(
 //                bottom: 60,
 //                right: 0,

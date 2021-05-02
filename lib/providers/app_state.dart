@@ -423,7 +423,8 @@ class AppStateProvider with ChangeNotifier {
                                   ),
                                   onPressed: () {
                                     print('button click to chat screen');
-                                    Get.to(ChatDetailPage());
+                                    // Get.to(ChatDetailPage());
+                                    _service.sendSms(driverModel.phone);
                                   },
                                 )
                               ]),

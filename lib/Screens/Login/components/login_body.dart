@@ -11,8 +11,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:testing_app/helpers/screen_navigation.dart';
+import 'package:testing_app/models/user.dart';
 import 'package:testing_app/providers/user.dart';
 import 'package:testing_app/Screens/home.dart';
+import 'package:testing_app/services/user.dart';
 
 class LoginBody extends StatefulWidget {
   const LoginBody({
@@ -54,6 +56,10 @@ class _LoginBodyState extends State<LoginBody> {
       },
     );
   }
+
+  Status _status = Status.Uninitialized;
+  UserServices _userServices = UserServices();
+  UserModel _userModel;
 
   String login = "LOG IN";
   Future<void> _showMyLogFDialog(BuildContext context) async {
@@ -100,7 +106,7 @@ class _LoginBodyState extends State<LoginBody> {
     return LoginBackground(
       child: SingleChildScrollView(
         child: Form(
-          key: _key,
+          key: _loginFormKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -169,9 +175,14 @@ class _LoginBodyState extends State<LoginBody> {
                   //           .doc(currentUser.user.uid)
                   //           .get()
                   //           .then(
-                  //             (DocumentSnapshot result) =>
+                  //             (DocumentSnapshot result) async{
                   //                 // print("User Logged in"),
+                  //             ScaffoldMessenger.of(context).showSnackBar(
+                  //               SnackBar(
+                  //                 content: const Text('Login successful!'),
+                  //               ),
                   //                 _showMyDialog(context),
+                  //
                   //           )
                   //           // Navigator.pushReplacement(
                   //           //     context,
